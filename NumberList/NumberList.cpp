@@ -7,8 +7,7 @@ using namespace std;
 // appendNode appends a node containing the        *
 // value pased into num, to the end of the list.   *
 //**************************************************
-
-void NumberList::appendNode(double num)
+void NumberList::appendNode(int num)
 {
 	ListNode *newNode;  // To point to a new node
 	ListNode *nodePtr;  // To move through the list
@@ -41,7 +40,6 @@ void NumberList::appendNode(double num)
 // stored in each node of the linked list          *
 // pointed to by head.                             *
 //**************************************************
-
 void NumberList::displayList() const
 {
 	ListNode *nodePtr;  // To move through the list
@@ -65,8 +63,7 @@ void NumberList::displayList() const
 // The insertNode function inserts a node with     *
 // num copied to its value member.                 *
 //**************************************************
-
-void NumberList::insertNode(double num)
+void NumberList::insertNode(int num)
 {
 	ListNode *newNode;					// A new node
 	ListNode *nodePtr;					// To traverse the list
@@ -118,8 +115,7 @@ void NumberList::insertNode(double num)
 // with num as its value. The node, if found, is   *
 // deleted from the list and from memory.          *
 //**************************************************
-
-void NumberList::deleteNode(double num)
+void NumberList::deleteNode(int num)
 {
 	ListNode *nodePtr;       // To traverse the list
 	ListNode *previousNode = nullptr;  // To point to the previous node
@@ -183,5 +179,81 @@ NumberList::~NumberList()
 
 		// Position nodePtr at the next node.
 		nodePtr = nextNode;
+	}
+}
+
+
+
+// overloaded equal operator 
+void NumberList::operator= (const NumberList& other) {
+	ListNode *nodePtr;  // To move through the list
+	ListNode *newNode;
+	ListNode *temp;
+
+	// delete all elements from head
+	nodePtr = head;
+	while (nodePtr) {
+		temp = nodePtr->next;
+		delete nodePtr;
+		nodePtr = temp;
+	}
+
+	// if the list to copy is empty
+	if (!other.head)
+		head = nullptr;
+	else  // Otherwise, copy all the elements over
+	{
+		nodePtr = other.head;
+
+		// create the first element in the newNode 
+		newNode = new ListNode;
+		head = newNode; // assign it to the classes head
+		newNode->value = nodePtr->value;
+		newNode->next = nullptr;
+
+		nodePtr = nodePtr->next; // move to the next element 
+
+		while (nodePtr) {
+			newNode->next = new ListNode;
+			newNode = newNode->next;
+			newNode->value = nodePtr->value;
+			newNode->next = nullptr;
+
+			nodePtr = nodePtr->next;
+		}
+	}
+
+
+}
+
+
+NumberList::NumberList(const NumberList &n) {
+	ListNode *nodePtr;  // To move through the list
+	ListNode *newNode;
+
+
+	// if the list to copy is empty
+	if (!n.head)
+		head = nullptr;
+	else  // Otherwise, copy all the elements over
+	{
+		nodePtr = n.head;
+
+		// create the first element in the newNode 
+		newNode = new ListNode;
+		head = newNode; // assign it to the classes head
+		newNode->value = nodePtr->value;
+		newNode->next = nullptr;
+
+		nodePtr = nodePtr->next; // move to the next element 
+
+		while (nodePtr) {
+			newNode->next = new ListNode;
+			newNode = newNode->next;
+			newNode->value = nodePtr->value;
+			newNode->next = nullptr;
+
+			nodePtr = nodePtr->next;
+		}
 	}
 }
